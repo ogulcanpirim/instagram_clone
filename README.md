@@ -4,7 +4,7 @@ A React Native Instagram clone application featuring a feeds page with search fu
 
 ## Screenshots
 ![Login Screen](./screenshots/login.png)
-<img src="https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif" width="400" />
+<img src="./screenshots//feed.gif" width="368" />
 
 ## Features
 
