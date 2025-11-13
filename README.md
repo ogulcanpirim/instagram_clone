@@ -1,97 +1,318 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Instagram Clone
 
-# Getting Started
+A React Native Instagram clone application featuring a feeds page with search functionality. This app demonstrates a modern mobile app architecture with infinite scrolling, video support, and real-time search capabilities.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Screenshots
+![Login Screen](./screenshots/login.png)
+![Feeds Screen](./screenshots/feeds.gif)
 
-## Step 1: Start Metro
+## Features
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+### Core Features
+- **Feeds Page**: Instagram-style masonry grid layout displaying posts with images and videos
+- **Search Functionality**: Real-time search with debouncing to filter feeds by name
+- **Infinite Scrolling**: Paginated feed loading with pull-to-refresh support
+- **Video Support**: Auto-playing videos for tall posts in the feed
+- **Image Slider**: Multi-image support with swipeable image galleries
+- **Authentication**: Login system with session management
+- **Responsive UI**: Animated search bar that hides/shows on scroll
+- **Performance Optimized**: Uses FlashList for efficient rendering of large lists
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+### UI/UX Features
+- Smooth animations and transitions using React Native Reanimated
+- Skeleton loading states for better perceived performance
+- Pull-to-refresh functionality
+- Viewport-based video playback (videos pause when not visible)
+- Animated header that responds to scroll position
+- Dark/Light theme support
 
-```sh
-# Using npm
-npm start
+## Tech Stack
 
-# OR using Yarn
-yarn start
+### Core
+- **React Native** (0.82.1) - Mobile framework
+- **React** (19.1.1) - UI library
+- **TypeScript** - Type safety
+
+### Navigation & State Management
+- **@react-navigation/native** (7.1.19) - Navigation library
+- **@react-navigation/bottom-tabs** (7.8.4) - Tab navigation
+- **@react-navigation/native-stack** (7.6.2) - Stack navigation
+- **@reduxjs/toolkit** (2.10.1) - State management
+- **react-redux** (9.2.0) - React bindings for Redux
+
+### Data Fetching & Caching
+- **@tanstack/react-query** (5.90.7) - Server state management
+- **axios** (1.13.2) - HTTP client
+- **miragejs** (^0.1.48) - API mocking for development
+
+### UI & Animation
+- **react-native-reanimated** (4.1.3) - Animations
+- **react-native-gesture-handler** (2.29.1) - Gesture handling
+- **@shopify/flash-list** (2.2.0) - High-performance list component
+- **react-native-fast-image** (8.6.3) - Optimized image loading
+- **react-native-video** (6.17.0) - Video playback
+- **react-native-svg** (15.14.0) - SVG support
+- **react-native-vector-icons** (10.3.0) - Icon library
+
+### Forms & Validation
+- **react-hook-form** (7.66.0) - Form management
+- **@hookform/resolvers** (5.2.2) - Form validation resolvers
+- **yup** (1.7.1) - Schema validation
+
+### Storage & Utilities
+- **react-native-mmkv** (4.0.0) - Fast key-value storage
+- **react-native-safe-area-context** (5.5.2) - Safe area handling
+- **react-native-keyboard-controller** (1.19.5) - Keyboard management
+- **react-native-toast-message** (2.3.3) - Toast notifications
+
+## Project Structure
+
+```
+instagram_clone/
+├── app/                          # Main application code
+│   ├── assets/                  # Static assets (SVGs, images)
+│   ├── constants/               # App constants (colors, dimensions, themes)
+│   ├── core/                    # Core functionality
+│   │   ├── components/          # Reusable UI components
+│   │   │   ├── IGButton.tsx
+│   │   │   ├── IGImageSlider.tsx
+│   │   │   ├── IGInput.tsx
+│   │   │   ├── IGList.tsx
+│   │   │   ├── IGPost.tsx       # Feed post component
+│   │   │   ├── IGSearchBar.tsx  # Search bar component
+│   │   │   ├── IGSkeleton.tsx
+│   │   │   └── IGText.tsx
+│   │   ├── APIClient.ts         # API client configuration
+│   │   └── server.ts            # MirageJS mock server
+│   ├── hooks/                   # Custom React hooks
+│   │   ├── useAuth.ts           # Authentication hook
+│   │   ├── useFeeds.ts          # Feeds data fetching hook
+│   │   └── useTheme.ts
+│   ├── models/                  # TypeScript type definitions
+│   │   ├── auth.d.ts
+│   │   └── feed.d.ts
+│   ├── navigation/              # Navigation configuration
+│   │   ├── AppNavigation.tsx
+│   │   ├── AuthStack.tsx
+│   │   └── ProtectedStack.tsx
+│   ├── providers/               # Context providers
+│   │   └── LoaderProvider.tsx
+│   ├── screens/                 # Screen components
+│   │   ├── home.tsx             # Main feeds screen
+│   │   ├── login.tsx
+│   │   └── profile.tsx
+│   ├── store/                   # Redux store
+│   │   ├── index.ts
+│   │   └── slices/
+│   └── utils/                   # Utility functions
+│       └── validationSchemas.ts
+├── feeds/                       # Feed data and video assets
+│   ├── index.ts                 # Mock feed data generator
+│   ├── videoMap.ts              # Video source mapping
+│   └── videos/                  # Video files
+├── android/                     # Android native code
+├── ios/                         # iOS native code
+├── scripts/                     # Build scripts
+│   └── compressVideos.js
+├── App.tsx                      # Root component
+├── package.json
+└── tsconfig.json
 ```
 
-## Step 2: Build and run your app
+## Installation
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### Prerequisites
+- Node.js >= 20
+- Yarn or npm
+- React Native development environment set up
+- For iOS: Xcode and CocoaPods
+- For Android: Android Studio and Android SDK
+
+### Steps
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd instagram_clone
+   ```
+
+2. **Install dependencies**
+   ```bash
+   yarn install
+   # or
+   npm install
+   ```
+
+3. **iOS Setup** (macOS only)
+   ```bash
+   cd ios
+   pod install
+   cd ..
+   ```
+
+4. **Start Metro Bundler**
+   ```bash
+   yarn start
+   # or
+   npm start
+   ```
+
+## Running the App
 
 ### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
+```bash
 yarn android
+# or
+npm run android
 ```
 
 ### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
+```bash
 yarn ios
+# or
+npm run ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## Authentication
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+The app includes a simple authentication system:
 
-## Step 3: Modify your app
+### Default Credentials
+- **Email**: `test@example.com`
+- **Password**: `test123`
 
-Now that you have successfully run the app, let's make changes!
+### How it Works
+- Authentication is handled via MirageJS mock server
+- Session is stored using MMKV for fast, persistent storage
+- Protected routes require authentication
+- Login screen is shown when no session exists
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## API & Mock Server
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+The app uses **MirageJS** to mock API endpoints during development:
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+### Endpoints
 
-## Congratulations! :tada:
+#### POST `/api/login`
+Login endpoint for user authentication.
 
-You've successfully run and modified your React Native App. :partying_face:
+**Request:**
+```json
+{
+  "email": "test@example.com",
+  "password": "test123"
+}
+```
 
-### Now what?
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "user": {
+      "id": "1",
+      "email": "test@example.com",
+      "username": "testuser",
+      "fullName": "Test User",
+      "avatar": null
+    },
+    "token": "mock-jwt-token-1"
+  }
+}
+```
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+#### GET `/api/feeds`
+Fetch paginated feeds with optional search.
 
-# Troubleshooting
+**Query Parameters:**
+- `page` (number): Page number (default: 1)
+- `limit` (number): Items per page (default: 20, max: 100)
+- `search` (string): Search query to filter feeds by name
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "0",
+      "name": "example",
+      "content": {
+        "images": [
+          "https://picsum.photos/1200/800?random=1",
+          "https://picsum.photos/1200/800?random=2"
+        ],
+        "video": "1"
+      }
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 20,
+    "total": 200,
+    "totalPages": 10,
+    "hasMore": true
+  }
+}
+```
 
-# Learn More
+## Key Components
 
-To learn more about React Native, take a look at the following resources:
+### IGPost
+Displays individual feed items with support for:
+- Image galleries with swipeable slider
+- Video playback (auto-plays when visible)
+- Tall post variant for videos
+- Skeleton loading state
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### IGSearchBar
+Animated search bar component with:
+- Real-time search input
+- Animated header that hides on scroll
+- Clear button
+- Debounced search queries
+
+### HomeScreen
+Main feeds screen featuring:
+- Masonry grid layout (3 columns)
+- Infinite scrolling with pagination
+- Pull-to-refresh
+- Viewport-based video playback
+- Search functionality
+
+## Development
+
+### Available Scripts
+
+- `yarn start` - Start Metro bundler
+- `yarn android` - Run on Android
+- `yarn ios` - Run on iOS
+- `yarn lint` - Run ESLint
+- `yarn test` - Run tests
+- `yarn type` - Type check with TypeScript
+- `yarn compress-videos` - Compress video assets
+
+### Code Style
+- TypeScript for type safety
+- ESLint for code linting
+- Prettier for code formatting (if configured)
+
+## Performance Optimizations
+
+- **FlashList**: High-performance list rendering
+- **Viewport-based rendering**: Only visible items are rendered
+- **Video optimization**: Videos pause when not in viewport
+- **Image optimization**: Fast Image for efficient image loading
+- **Debounced search**: Reduces API calls during typing
+- **Skeleton loading**: Better perceived performance
+
+## Notes
+
+- The app uses mock data generated with Faker.js
+- Videos are stored locally in the `feeds/videos/` directory
+- Images are fetched from Picsum Photos API
+- The mock server (MirageJS) intercepts API calls in development
+- Session persistence is handled via MMKV storage
+
+
